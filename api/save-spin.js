@@ -21,13 +21,13 @@ export default async function handler(req, res) {
       .insert([{ name, email, prize }]);
 
     if (error) {
-      console.error('Supabase Error:', error);
-      return res.status(400).json({ error: error.message, details: error.details });
+      console.error('Supabase Insert Error:', error);
+      return res.status(400).json({ error: error.message });
     }
 
     return res.status(200).json({ success: true, data });
   } catch (err) {
-    console.error('Server Error:', err);
+    console.error('Server Execution Error:', err);
     return res.status(500).json({ error: err.message || 'Internal Server Error' });
   }
 }
