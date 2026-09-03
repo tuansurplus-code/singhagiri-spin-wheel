@@ -1,16 +1,24 @@
-<!-- Inside public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Singhagiri Spin Wheel</title>
+  <!-- Your styles here -->
+</head>
+<body>
 
-<script>
-  async function submitSpinResult(name, email, prize) { 
-    const response = await fetch('/api/save-spin', { 
-      method: 'POST', 
-      headers: { 'Content-Type': 'application/json' }, 
-      body: JSON.stringify({ name, email, prize }) 
-    }); 
-    const result = await response.json(); 
-    console.log(result); 
-  }
-</script>
+  <!-- Your Spin Wheel HTML UI here -->
 
+  <script>
+    async function submitSpinResult(name, email, prize) { 
+      const response = await fetch('/api/save-spin', { 
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' }, 
+        body: JSON.stringify({ name, email, prize }) 
+      }); 
+      const result = await response.json(); 
+      console.log(result); 
+    }
+  </script>
 </body>
 </html>
