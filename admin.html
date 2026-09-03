@@ -1,0 +1,9 @@
+async function fetchSpinResults() {
+  const response = await fetch('/api/get-results');
+  const result = await response.json();
+
+  if (result.status === 'success') {
+    console.log("Admin Data:", result.data);
+    // Render result.data into your UI table
+  }
+}
