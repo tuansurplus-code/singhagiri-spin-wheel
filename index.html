@@ -2,12 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Singhagiri Spin Wheel</title>
-  <!-- Add your CSS styles or links here -->
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; background: #f4f4f9; padding: 20px; }
+    .container { max-width: 400px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    input { width: 90%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px; }
+    button { width: 95%; padding: 12px; background: #28a745; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; }
+    button:hover { background: #218838; }
+    #result { margin-top: 15px; font-weight: bold; color: #333; }
+  </style>
 </head>
 <body>
 
-  <!-- Paste your spin wheel UI (canvas, form inputs, spin button, etc.) here -->
+  <div class="container">
+    <h2>Singhagiri Spin Wheel</h2>
+    <form id="spinForm">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <input type="email" id="email" placeholder="Your Email" required>
+      <button type="button" onclick="handleSpin()">Spin the Wheel!</button>
+    </form>
+    <div id="result"></div>
+  </div>
 
   <script>
     async function submitSpinResult(name, email, prize) { 
@@ -16,8 +32,32 @@
         headers: { 'Content-Type': 'application/json' }, 
         body: JSON.stringify({ name, email, prize }) 
       }); 
-      const result = await response.json(); 
-      console.log(result); 
+      return await response.json(); 
+    }
+
+    async function handleSpin() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      
+      if (!name || !email) {
+        alert('Please fill in both name and email.');
+        return;
+      }
+
+      // Sample prize selector logic
+      const prizes = ['10% Off', '5% Off', 'Free Gift', 'Better Luck Next Time'];
+      const prize = prizes[Math.floor(Math.random() * prizes.length)];
+
+      document.getElementById('result').innerText = `You won: ${prize}! Saving...`;
+
+      try {
+        const result = await submitSpinResult(name, email, prize);
+        console.log('Saved to Supabase:', result);
+        document.getElementById('result').innerText = `You won: ${prize}! (Recorded successfully)`;
+      } catch (err) {
+        console.error(err);
+        document.getElementById('result').innerText = `You won: ${prize}! (Failed to save result)`;
+      }
     }
   </script>
 </body>
